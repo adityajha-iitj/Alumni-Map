@@ -1,18 +1,36 @@
-# Alumni-Map
-Phase 1: Basic Map Implementation (Leaflet.js)
-  Set up a Leaflet.js map centered on a default location.
-  Integrate zoom in/out functionality (zoom out to the world level).
-  Fetch and display alumni location data with red markers.
-  Implement interactive popups on markers to show alumni details.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Getting Started
 
-Phase 2: Transition to 3D Globe (Three.js Integration)
-  Implement a seamless transition from Leaflet map to a Three.js globe at max zoom-out.
-  Render the globe with alumni locations mapped onto it.
-  Ensure smooth camera controls for interaction (rotation, zoom, tilt).
+First, run the development server:
 
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-Phase 3: Enhanced Alumni Popups & Data Integration
-  Ensure popups work on both 2D map and 3D globe views.
-  Style popups for clarity and usability.
-  Fetch alumni details dynamically from a database or API.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

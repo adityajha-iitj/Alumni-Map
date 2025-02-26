@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alumni Map Project Action Plan
 
-## Getting Started
+## Objective
+Create an interactive map to display the locations of alumni.
 
-First, run the development server:
+## Action Plan
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Phase 1: Planning
+- Define project scope and objectives
+- Identify key features and functionalities
+- Research and select appropriate technologies and tools
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Phase 2: Design
+- Create wireframes and mockups for the user interface
+- Design the database schema
+- Plan the API endpoints and data flow
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Phase 3: Development
+- Set up the project repository and development environment
+- Implement the front-end interface
+- Develop the back-end API and database integration
+- Integrate the map service (Leaflet)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Phase 4: Testing
+- Write unit and integration tests
+- Perform user acceptance testing (UAT)
+- Fix bugs and optimize performance
 
-## Learn More
+## Tools and Technologies
+- **Front-End:** React, HTML, CSS
+- **Back-End:** Node.js, Express
+- **Database:** MongoDB
+- **Map Service:** Leaflet
+- **Version Control:** Git and GitHub
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Success Metrics
+- User satisfaction and feedback
+- Performance and reliability of the application
+- Achievement of project objectives within the timeline

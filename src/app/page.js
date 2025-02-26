@@ -1,7 +1,7 @@
 "use client"; // Ensures this component runs only on the client side
 
 import MapComponent from "./components/Map/MapComponent";
-import styles from "./page.module.css"; // Assuming you have a CSS module for page-specific styles
+import styles from "./page.module.css";
 
 const Page = () => {
   return (

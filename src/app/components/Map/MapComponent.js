@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect, useState } from "react";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import styles from "./MapComponent.module.css";
 
@@ -15,35 +15,31 @@ const customIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
-// Sample location data
-const locations = [
-  { lat: 51.505, lng: -0.09, name: "London" },
-  { lat: 40.7128, lng: -74.006, name: "New York" },
-  { lat: 37.7749, lng: -122.4194, name: "San Francisco" },
-  { lat: 19.076, lng: 72.8777, name: "Mumbai" },
-  { lat: 35.6895, lng: 139.6917, name: "Tokyo" },
-];
 
-// Custom Cluster Icons
-const createClusterCustomIcon = (cluster) => {
-  const count = cluster.getChildCount();
-  let color = count > 5000 ? "blue" : "orange";
-
-  return L.divIcon({
-    html: `<div class="cluster-icon cluster-${color}">${count}</div>`,
-    className: "custom-cluster",
-    iconSize: L.point(40, 40),
-  });
-};
 
 const MapComponent = () => {
-  const [mounted, setMounted] = useState(false);
+  const [locations, setLocations] = useState([]); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
+    fetch("/coordinates.json") 
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setLocations(data); 
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error loading locations:", error);
+        setLoading(false);
+      });
   }, []);
 
-  if (!mounted) return <p className={styles.loadingText}>Loading map...</p>;
+  if (loading) return <p className={styles.loadingText}>Loading map...</p>;
 
   const bounds = [
     [85, -180],
@@ -52,13 +48,15 @@ const MapComponent = () => {
 
   return (
     <MapContainer
-      center={[30, 0]} // Centered globally
+      center={[30, 0]}
       zoom={2.3}
       className={styles.mapContainer}
       minZoom={2.2}
       maxZoom={12}
       maxBounds={bounds}
       maxBoundsViscosity={2.0}
+      scrollWheelZoom={true}
+      zoomDelta={0.5}
     >
       {/* Grayscale Tile Layer */}
       <TileLayer
@@ -71,7 +69,15 @@ const MapComponent = () => {
       />
 
       {/* Marker Clustering */}
-      <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
+      <MarkerClusterGroup 
+        maxClusterRadius={(zoom) => {
+          if (zoom >= 12) return 10;  // Almost no clustering at high zoom
+          if (zoom >= 10) return 30;  // Slight clustering
+          return 80; // Default clustering radius
+        }}
+        animate = {true}
+        // iconCreateFunction={createClusterCustomIcon}
+        chunkedLoading>
         {locations.map((loc, index) => (
           <Marker key={index} position={[loc.lat, loc.lng]} icon={customIcon}>
             <Popup>{loc.name}</Popup>

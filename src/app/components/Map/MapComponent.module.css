@@ -1,6 +1,6 @@
 .mapContainer {
-  height: 90vh;
-  width: 100vw;
+  height: 770px;
+  width: 1670px;
   border: 2px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -29,4 +29,8 @@
 
 .cluster-orange {
   background-color: #ff7f0e;
+}
+
+.leaflet-marker-icon.leaflet-div-icon.custom-cluster {
+  transition: transform 1s ease-in-out, opacity 0.3s ease-in-out;
 }

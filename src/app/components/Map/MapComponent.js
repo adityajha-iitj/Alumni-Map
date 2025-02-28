@@ -15,14 +15,50 @@ const customIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
+const createClusterCustomIcon = (cluster) => {
+  const count = cluster.getChildCount();
+  let color = count > 50 ? "rgb(10, 55, 92)" : count > 10 ? "rgb(10, 55, 92)" : "rgba(10,55,92)";
+  let width, height;
+  let font_size;
 
+  if (count > 100) {
+    width = 80;
+    height = 80;
+  } else if (count > 50) {
+    width = 60;
+    height = 60;
+  } else if (count > 10) {
+    width = 40;
+    height = 40;
+  } else {
+    width = 20;
+    height = 20;
+  }
+  if (count > 100) {
+    font_size = 30;
+  } else if (count > 50) {
+    font_size = 20;
+  } else if (count > 10) {
+    font_size = 20;
+  } else {
+    font_size = 12;
+  }
+
+  return L.divIcon({
+    html: `<div style="background-color:${color}; width:${width}px; height:${height}px;
+           border-radius:50%; display:flex; align-items:center;justify-content:center;
+           color:white; font-weight:bold; font-size:${font_size}px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">${count}</div>`,
+    className: "custom-cluster",
+    iconSize: L.point[(width, height)],
+  });
+};
 
 const MapComponent = () => {
-  const [locations, setLocations] = useState([]); 
+  const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/coordinates.json") 
+    fetch("/coordinates.json")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -30,7 +66,7 @@ const MapComponent = () => {
         return res.json();
       })
       .then((data) => {
-        setLocations(data); 
+        setLocations(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -43,7 +79,7 @@ const MapComponent = () => {
 
   const bounds = [
     [85, -180],
-    [-85, 180]
+    [-85, 180],
   ];
 
   return (
@@ -69,15 +105,10 @@ const MapComponent = () => {
       />
 
       {/* Marker Clustering */}
-      <MarkerClusterGroup 
-        maxClusterRadius={(zoom) => {
-          if (zoom >= 12) return 10;  // Almost no clustering at high zoom
-          if (zoom >= 10) return 30;  // Slight clustering
-          return 80; // Default clustering radius
-        }}
-        animate = {true}
-        // iconCreateFunction={createClusterCustomIcon}
-        chunkedLoading>
+      <MarkerClusterGroup
+        iconCreateFunction={createClusterCustomIcon} // Custom function to style clusters
+        chunkedLoading
+      >
         {locations.map((loc, index) => (
           <Marker key={index} position={[loc.lat, loc.lng]} icon={customIcon}>
             <Popup>{loc.name}</Popup>

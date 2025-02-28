@@ -16,8 +16,8 @@ const customIcon = new L.Icon({
 });
 
 const createClusterCustomIcon = (cluster) => {
-  const count = cluster.getChildCount(); 
-  let color = count > 50 ? "blue" : count > 10 ? "blue" : "blue"; 
+  const count = cluster.getChildCount();
+  let color = count > 50 ? "rgb(10, 55, 92)" : count > 10 ? "rgb(10, 55, 92)" : "rgba(10,55,92)";
   let width, height;
   let font_size;
 
@@ -34,34 +34,31 @@ const createClusterCustomIcon = (cluster) => {
     width = 20;
     height = 20;
   }
-  if (count > 100){
+  if (count > 100) {
     font_size = 30;
-  }
-  else if (count > 50){
+  } else if (count > 50) {
     font_size = 20;
-  }
-  else if (count > 10){
+  } else if (count > 10) {
     font_size = 20;
-  }
-  else{
+  } else {
     font_size = 12;
   }
 
   return L.divIcon({
     html: `<div style="background-color:${color}; width:${width}px; height:${height}px;
-           border-radius:50%; display:flex; align-items:center; justify-content:center;
-           color:white; font-weight:bold; font-size:${font_size}px">${count}</div>`,
+           border-radius:50%; display:flex; align-items:center;justify-content:center;
+           color:white; font-weight:bold; font-size:${font_size}px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">${count}</div>`,
     className: "custom-cluster",
-    iconSize: L.point[width, height],
+    iconSize: L.point[(width, height)],
   });
 };
 
 const MapComponent = () => {
-  const [locations, setLocations] = useState([]); 
+  const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/coordinates.json") 
+    fetch("/coordinates.json")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -69,7 +66,7 @@ const MapComponent = () => {
         return res.json();
       })
       .then((data) => {
-        setLocations(data); 
+        setLocations(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -82,7 +79,7 @@ const MapComponent = () => {
 
   const bounds = [
     [85, -180],
-    [-85, 180]
+    [-85, 180],
   ];
 
   return (
@@ -94,6 +91,8 @@ const MapComponent = () => {
       maxZoom={12}
       maxBounds={bounds}
       maxBoundsViscosity={2.0}
+      scrollWheelZoom={true}
+      zoomDelta={0.5}
     >
       {/* Grayscale Tile Layer */}
       <TileLayer
@@ -107,15 +106,15 @@ const MapComponent = () => {
 
       {/* Marker Clustering */}
       <MarkerClusterGroup
-  iconCreateFunction={createClusterCustomIcon} // Custom function to style clusters
-  chunkedLoading
->
-  {locations.map((loc, index) => (
-    <Marker key={index} position={[loc.lat, loc.lng]} icon={customIcon}>
-      <Popup>{loc.name}</Popup>
-    </Marker>
-  ))}
-</MarkerClusterGroup>
+        iconCreateFunction={createClusterCustomIcon} // Custom function to style clusters
+        chunkedLoading
+      >
+        {locations.map((loc, index) => (
+          <Marker key={index} position={[loc.lat, loc.lng]} icon={customIcon}>
+            <Popup>{loc.name}</Popup>
+          </Marker>
+        ))}
+      </MarkerClusterGroup>
     </MapContainer>
   );
 };

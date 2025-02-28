@@ -30,3 +30,7 @@
 .cluster-orange {
   background-color: #ff7f0e;
 }
+
+.leaflet-marker-icon.leaflet-div-icon.custom-cluster {
+  transition: transform 1s ease-in-out, opacity 0.3s ease-in-out;
+}

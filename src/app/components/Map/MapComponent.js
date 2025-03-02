@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useEffect, useState, useRef } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import styles from "./MapComponent.module.css";
 
-// Custom Marker Icon
+
 const customIcon = new L.Icon({
   iconUrl: "/marker-icon-2x.png",
   shadowUrl: "/marker-shadow.png",
@@ -24,12 +24,15 @@ const createClusterCustomIcon = (cluster) => {
   if (count > 100) {
     width = 80;
     height = 80;
+    font_size = 30;
   } else if (count > 50) {
     width = 60;
     height = 60;
+    font_size = 20;
   } else if (count > 10) {
     width = 40;
     height = 40;
+    font_size = 20;
   } else {
     width = 20;
     height = 20;
@@ -53,9 +56,59 @@ const createClusterCustomIcon = (cluster) => {
   });
 };
 
+
+const CenterButton = () => {
+  const map = useMap(); 
+
+  useEffect(() => {
+    if (!map) return;
+
+    const centerControl = L.control({ position: "topleft" });
+
+    centerControl.onAdd = () => {
+      const button = L.DomUtil.create("button", "leaflet-bar leaflet-control");
+      button.innerHTML = "⌖";
+      button.style.width = "40px"; 
+      button.style.height = "40px";
+      button.style.borderRadius = "50%"; 
+      button.style.background = "rgb(10, 55, 92)"; 
+      button.style.color = "white";
+      button.style.fontSize = "20px";
+      button.style.fontWeight = "bold";
+      button.style.border = "none";
+      button.style.cursor = "pointer";
+      button.style.boxShadow = "0 0 10px rgba(10, 55, 92, 0.8)"; 
+      button.style.transition = "all 0.3s ease-in-out";
+
+      // Hover effect
+      button.onmouseover = () => {
+        button.style.boxShadow = "0 0 15px rgba(10, 55, 255, 1)";
+        button.style.transform = "scale(1.1)";
+      };
+      button.onmouseleave = () => {
+        button.style.boxShadow = "0 0 10px rgba(10, 55, 92, 0.8)";
+        button.style.transform = "scale(1)";
+      };
+
+      button.onclick = () => map.setView([30, 0], 2.3); 
+
+      return button;
+    };
+
+    centerControl.addTo(map);
+
+    return () => {
+      map.removeControl(centerControl);
+    };
+  }, [map]);
+
+  return null;
+};
+
 const MapComponent = () => {
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     fetch("/coordinates.json")
@@ -66,6 +119,7 @@ const MapComponent = () => {
         return res.json();
       })
       .then((data) => {
+        setLocations(data);
         setLocations(data);
         setLoading(false);
       })
@@ -94,7 +148,6 @@ const MapComponent = () => {
       scrollWheelZoom={true}
       zoomDelta={0.5}
     >
-      {/* Grayscale Tile Layer */}
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
         attribution='&copy; <a href="https://carto.com/">CARTO</a>'
@@ -103,6 +156,8 @@ const MapComponent = () => {
         url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png"
         attribution='&copy; <a href="https://carto.com/">CARTO</a>'
       />
+
+<CenterButton />
 
       {/* Marker Clustering */}
       <MarkerClusterGroup

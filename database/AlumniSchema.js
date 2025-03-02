@@ -16,8 +16,6 @@ contact:{
     linkedin: {type:String, require:false},
     portfolio:{type:String, require:false}
 }
-
-
 })
 
 module.exports=mongoose.model('Alumn', AlumniSchema)

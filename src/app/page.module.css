@@ -16,44 +16,41 @@
   padding: 0px;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  min-height: 10vh;
-  background-color: #252525c3;
+  min-height: 6vh;
+  background-color: #780000e6;
   font-family: sans-serif;
   color: white;
   font-size: 12px;
-
   width: 100vw;
   position: relative;
+
   z-index: 1000;
 }
 
 .logo {
   height: 60px;
+  margin-left: 3%;
 }
 
 .heading {
   font-family: "Times New Roman", Times, serif;
   font-size: 14px;
-  background-color: #2e1919;
+  background-color: white;
   width: 100vw;
   display: flex;
-  justify-content: center;
-  margin: 0;
-  color: white;
+  justify-content: flex-start;
+  margin: 0px;
+  color: rgb(33, 3, 3);
   padding: 0px;
   height: 90%;
 }
-.iitj {
-  font-size: 12px;
-  font-family: "Times New Roman", Times, serif;
-  font-style: normal;
-}
+
 .list {
   display: flex;
   justify-content: space-around;
-  width: 50%;
+  width: 90%;
   list-style: none;
   transition: transform 0.5s ease-in-out;
 }
@@ -73,6 +70,7 @@
 .burger {
   display: none;
   cursor: pointer;
+  margin-left: 90%;
 }
 
 .burger div {
@@ -96,8 +94,8 @@
     right: 0;
     height: 70vh;
     z-index: 1001;
-    top: 8vh;
-    background-color: #595858;
+    top: 3vh;
+    background-color: #8b0c0c;
     display: flex;
     flex-direction: column;
     margin-top: 110px;

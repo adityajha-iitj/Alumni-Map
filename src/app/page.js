@@ -14,20 +14,16 @@ const Page = () => {
   return (
     <div className={styles.pageContainer}>
       <div className={styles.heading}>
-        <h1>Alumni Map</h1>
-      </div>
-      <title>Alumni Map</title>
-
-      <nav className={styles.nav}>
         <img
           src="IIT-logo.png"
           alt="IIT Jodhpur Logo"
           className={styles.logo}
         ></img>
-        <div className={styles.iitj}>
-          <h1> IIT Jodhpur: Society of Alumni Affairs</h1>
-        </div>
+        <h1> IIT Jodhpur: Society of Alumni Affairs</h1>
+      </div>
+      <title>Alumni Map</title>
 
+      <nav className={styles.nav}>
         <ul className={`${styles.list} ${isNavActive ? styles.navActive : ""}`}>
           <li>
             <a href="#">INITIATIVES</a>

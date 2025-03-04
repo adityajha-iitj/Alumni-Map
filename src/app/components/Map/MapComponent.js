@@ -111,7 +111,7 @@ const MapComponent = () => {
   const mapRef = useRef(null);
 
   useEffect(() => {
-    fetch("/coordinates.json")
+    fetch("api/alumni")
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI; // Store your MongoDB URI in an environment variable
+const MONGODB_URI = process.env.MONGODB_URI; // Store your MongoDB URI in an environment variable, process.env means the process which is happening, uska env kya hai, jaise yaha jab np run dev karte hai to environment mention hua v aata hai..
 
 if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
@@ -23,3 +23,7 @@ async function connectDB() {
 }
 
 export default connectDB;
+
+
+//mongoose.connect basically connection status, connection establish karne me and to disconnect etc karne me ahelp karnta
+// mongoose.connect(uri, options), manually database se connection estab;lish karata hai . usenewUrlParser string chk karne m ehelp karta if it is valid uri 
